@@ -1,0 +1,154 @@
+# Online Booking System Setup Guide
+
+This guide will walk you through setting up and running the Online Booking System console application from scratch. The system provides a simple text-based interface for booking appointments with a virtual assistant named Grok.
+
+## Prerequisites
+
+- [.NET SDK](https://dotnet.microsoft.com/download) (6.0 or later recommended)
+- A code editor (Visual Studio, Visual Studio Code, or any text editor)
+- Basic knowledge of C# and .NET
+
+## Step 1: Create a New Console Application
+
+1. Open a terminal/command prompt
+2. Navigate to the directory where you want to create your project
+3. Create a new console application:
+
+```bash
+dotnet new console -n OnlineBookingSystem
+cd OnlineBookingSystem
+```
+
+## Step 2: Set Up Project Structure
+
+1. Open the project folder in your preferred code editor
+2. Replace the contents of `Program.cs` with the booking system code you have
+
+## Step 3: Add Required NuGet Packages
+
+The application uses a few .NET libraries. Add them to your project:
+
+```bash
+dotnet add package System.Text.Json
+```
+
+## Step 4: Configure Make.com Webhook (Optional)
+
+If you want to use the webhook functionality:
+
+1. Create a free account on [Make.com](https://www.make.com/)
+2. Create a new scenario 
+3. Add an HTTP webhook trigger
+4. Copy the webhook URL
+5. Replace the `_webhookUrl` value in the `BookingSystem` class with your webhook URL
+
+If you don't need the webhook functionality, you can modify the code to skip the webhook call.
+
+## Step 5: Build the Application
+
+Build the application to check for any compilation errors:
+
+```bash
+dotnet build
+```
+
+Fix any errors that appear during the build process.
+
+## Step 6: Run the Application
+
+Run the application:
+
+```bash
+dotnet run
+```
+
+## Using the Booking System
+
+1. When the application starts, you'll be greeted by Grok, the booking assistant
+2. Enter booking requests in natural language, such as:
+   - "I want a haircut tomorrow at 2pm"
+   - "Book me for a massage next Wednesday at 3:30pm"
+   - "I'd like a facial on January 15th at 10am"
+3. Follow the prompts to provide your name and complete the booking
+4. Type "exit" to quit the application
+
+## Application Structure
+
+- **Program**: Entry point to the application
+- **Service**: Class representing available services
+- **Booking**: Class representing a customer booking
+- **BookingSystem**: Main class handling the conversation and booking logic
+
+## Customizing the Application
+
+### Adding New Services
+
+To add new services, modify the `_services` list in the `BookingSystem` constructor:
+
+```csharp
+_services = new List<Service>
+{
+    new Service { Name = "Haircut", Duration = 30, Price = 30.00m },
+    // Add more services here
+};
+```
+
+### Modifying Time Slots
+
+The application doesn't have predefined time slots, but you can add validation to check if a requested time is within business hours:
+
+```csharp
+// Example: Check if time is within business hours (9 AM to 5 PM)
+if (time.Value.Hours < 9 || time.Value.Hours >= 17)
+{
+    Console.WriteLine("Grok: Sorry, we're only open from 9 AM to 5 PM.");
+    continue;
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Webhook errors**: If you see webhook errors, check your Make.com scenario is properly set up and running.
+2. **Date/time parsing issues**: If the system fails to parse dates or times correctly, you may need to adjust the `ExtractBookingInfo` method to handle additional formats.
+
+### Debugging
+
+To run the application in debug mode with Visual Studio:
+
+1. Open the project in Visual Studio
+2. Set breakpoints in the code where needed
+3. Press F5 to start debugging
+
+With Visual Studio Code:
+
+1. Add a .vscode/launch.json file 
+2. Configure it for .NET Core debugging
+3. Start debugging using the Run menu
+
+## Advanced Customization
+
+### Implementing a Database
+
+The current system stores bookings in memory. To implement a database:
+
+1. Add a database package like Entity Framework Core:
+   ```bash
+   dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+   ```
+
+2. Create a database context and models
+3. Modify the `BookingSystem` class to save bookings to the database
+
+### Adding a GUI
+
+To convert this to a GUI application:
+
+1. Create a new WPF or Windows Forms project
+2. Copy the core booking logic
+3. Create UI elements for the conversation
+
+## License
+
+This application is provided as-is without any warranties.
