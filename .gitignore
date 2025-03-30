@@ -1,0 +1,21 @@
+# Ignore build output
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.vs/
+.vscode/
+
+# Ignore temporary files
+*.tmp
+*.bak
+
+# Ignore NuGet packages
+packages/
+*.nupkg
+
+# Ignore other
+.DS_Store
+Thumbs.db
